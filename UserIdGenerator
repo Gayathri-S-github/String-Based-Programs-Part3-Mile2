@@ -1,0 +1,72 @@
+/* FirstName = Rajiv
+LastName = Roy
+Pin= 560037
+N= 6
+Output: YrAJIV75
+UserId = Last letter of the smaller name + Entire word of the longer name + Digit at position N in the PIN when traversing 
+the PIN from left to Right + Digit at position N in the PIN when traversing the PIN from Right to Left
+UserId= yRajiv75
+Output: YrAJIV75
+*/
+
+import java.io.*;
+import  java.util.*;
+
+// Read only region start
+class UserIDGeneration {
+
+	public String userIdGeneration(String input1,String input2,int input3,int input4){
+		// Read only region end
+		String firstName = input1;
+		String lastName = input2;
+		int pin = input3;
+		int N = input4;
+		
+		String longerName;
+		String smallerName;
+		StringBuilder userId = new StringBuilder();
+				
+		if (firstName.length() > lastName.length()) {
+			longerName = firstName;
+			smallerName = lastName;
+		} else if (firstName.length() < lastName.length())  {
+			longerName = lastName;
+			smallerName = firstName;
+		} else {
+			if (firstName.compareTo(lastName) < 1 ) {
+				longerName = lastName;
+			    smallerName = firstName;
+			} else {
+				longerName = firstName;
+			    smallerName = lastName;
+			}
+		}
+		
+		userId.append(smallerName.charAt(smallerName.length() - 1));
+		userId.append(longerName);
+				
+		for (int i = 0; i < userId.length(); i++) {
+			if (Character.isUpperCase(userId.charAt(i)))
+				userId.setCharAt(i, Character.toLowerCase(userId.charAt(i)));
+			else
+				userId.setCharAt(i, Character.toUpperCase(userId.charAt(i)));
+		}
+		
+		userId.append(String.valueOf(pin).charAt(N - 1));
+		userId.append(String.valueOf(pin).charAt(String.valueOf(pin).length() - N));
+		
+		
+		return userId.toString();
+	}
+}
+public class UserIDwipro {
+	public static void main(String args[]) {
+		UserIDGeneration id=new UserIDGeneration();
+		String out=id.userIdGeneration("Rajiv","Roy",560037,6);
+		System.out.println(out);
+	}
+}
+
+/* Output
+YrAJIV75
+*/
